@@ -1,0 +1,84 @@
+.\" Man pages for ssh-email-connect
+
+.TH man 1 "2013-11-01" "1.0" "ssh-email-connect man pages"
+
+.SH NAME
+.B "ssh-email-connect"
+
+A wrapper around the ssh command that uses thunderbird inboxes to find the current IP address of a remote host. It uses information e-mailed from the remote host by boot-notify.service.
+
+.SH SYNOPSIS
+ssh-email-connect [-p PORT] [-u sshUSER] [-s SUBJECT] [-r remHOST] 
+
+.SH "DESCRIPTION"
+The ssh-email-connect script browses thunderbird inboxes searching for information from a remote host to find out the remote host's IP. The e-mail message from the remote hosts must have the host's IP as the first word. The boot-notify package provides a systemd service and scripts to send such e-mail messages. If ssh-email-connect finds such a message, the script ssh-connects the local user to the remote host.
+.br
+
+For safety reasons, the e-mail message from the remote host informs only about the host's current IP. The remote ssh port, user login and password should be known to the local user, or SSH key authentication should be set up and enabled for the two computers to connect.
+
+
+.SH OPTIONS
+
+.B -u sshUSER
+.br
+sshUSER is the user name/login that the local user will log in as, using the ssh network protocol. The default value of sshUSER is "$USER" (the current user on the local host).
+
+.B -p PORT
+.br
+The ssh connection port. It defaults to 22 if not set otherwise.
+
+.B -s SUBJECT
+SUBJECT is the subject of the e-mail message ssh-email-connect looks for in thunderbird's inboxes.
+.br
+If not invoked explicitly, SUBJECT is assigned a default value of 'time msg from'. Not enough to differentiate e-mails from different hosts.
+
+.B -r remHOST
+.br
+The remote host's name. If this option is used, " $remHOST" is appended to the $SUBJECT, and the script looks for e-mail subjects containing the value of "$SUBJECT $remHOST" (a space between $SUBJECT and $remHOST).
+
+
+.SH AUTHOR's NOTES AND USAGE EXAMPLES
+.br
+(1) The remote host needs to send boot-time and shutdown notifications in a format recognizable by ssh-email-connect.
+.br
+
+(2) The boot-notify package/script provides a systemd service that sends the boot-time and shutdown notifications.
+.br
+
+(3) The ssh-email-connect script works only with thunderbird inboxes. Theoretically, it is possible to use other e-mail clients inboxes provided their structure is the same as thunderbird's.
+.br
+
+(4) The author has no plans to make the script work with other e-mail clients.
+.br
+
+(5) Use thunderbird's "Compact Folders" feature to avoid false positives. Note that a deleted e-mail message is not removed from an inbox until the "Compact Folders" command is invoked.
+.br
+
+.br
+(6) The script could be made to work with profiles that held all the information necessary to connect to the remote hosts. In author's opinion that would be an overkill. Instead, the author suggests using aliases in .bashrc, e.g.
+
+.br
+	conn2neighbour='ssh-email-connect -p56991 -u xyz -r neighbour'
+.br
+	conn2mum='ssh-email-connect -u me -r mum'
+.br
+	conn2m='ssh-email-connect -u me -r m$'
+.br
+
+.br
+The last example shows how to differentiate between the 'mum' and 'm' host names. Of course, in this example the remote host name must be the last word in the subject.
+./"SEE ALSO
+./"A list of related commands or functions.
+
+.SH BUGS
+.br
+Not a bug, but be careful when you connect to multiple remote hosts. The default $SUBJECT will not be enough to differentiate e-mail messages from the different hosts.
+.br
+Also, see note (5) above.
+
+.SH AUTHOR
+.AU
+Wiesław Magusiak <w.magusiak at gmail . com>
+
+.SH COPYRIGHT
+Do what you like with the ssh-email-connect, but do not blame me. No warranty is given, and no responsible is taken for the use.

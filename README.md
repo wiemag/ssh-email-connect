@@ -1,7 +1,7 @@
 ssh-email-connect
 -----------------
 
-This script is a wrapper around the ssh command. Using the inboxes of the thunderbird e-mail client, it checks the current IP of a remote host and makes it possible for the local user to connect to that host. For safety reasons, the e-mail message from the remote host informs only about the host's current IP. The remote ssh port, user login and password should be know to the local user, or key authentication should be enabled for the two computer to connect.
+This script is a wrapper around the ssh command. Using the inboxes of the thunderbird e-mail client, it checks the current IP of a remote host and makes it possible for the local user to connect to that host. For safety reasons, the e-mail message from the remote host informs only about the host's current IP. The remote ssh port, user login and password should be known to the local user, or SSH key authentication should be enabled for the two computers to connect.
 
 The remote host needs to send boot-time and shutdown notifications in a format recognizable by ssh-email-connect.
 
@@ -27,7 +27,7 @@ The last example shows how to differentiate between the 'mum' and 'm' host names
 DEPENDENCIES
 - (not a dependency, but required) mozilla's thunderbird
 - openssh    (command:  ssh)
-- iputils2   (command:  ip)
+- iproute2   (command:  ip)
 - curl       (command:  curl)
 - or wget    (command:  wget),optional
 - grep       (command:  grep)
