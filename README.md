@@ -19,6 +19,9 @@ Note:  There are two opposing approaches to and expectations about how the scrip
 
 	conn2neighbour='ssh-email-connect.sh -p56991 -u xyz -r neighbour'
 	conn2mum='ssh-email-connrct.sh -u me -r mum'
+	conn2m='ssh-email-connrct.sh -u me -r m$'
+
+The last example shows how to differentiate between the 'mum' and 'm' host names. Of course, in this example the remote host name must be the last word in the subject.
 
 
 DEPENDENCIES

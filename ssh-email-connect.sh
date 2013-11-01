@@ -96,7 +96,6 @@ LOCAL=$(myip);
 	echo The remote computer is on the local network.
 }
 
-
 # ------------- The remote computer is switched on. -------------
 echo -e "Connecting...\n\tssh $PORT $sshUSER@$remIP"
 ssh $PORT $sshUSER@$remIP
