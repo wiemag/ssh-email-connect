@@ -7,7 +7,7 @@
 	echo "Missing dependency: Install thunderbird.";
 	exit
 }
-VERSION=0.10
+VERSION=0.11
 PORT=''
 sshUSER=$USER
 SUBJ="time msg from"
@@ -56,9 +56,12 @@ function myip () {
 
 # ------------- Start --------------------------------------------
 if [[ $# > 0 ]] ; then
-	USAGE="Usage:\n\t${0##*/} [-p PORT] [-u sshUSER] [-s SUBJECT] [-r remHOST]\
-	\n\tDefault sshUSER='$sshUSER', PORT=22.\
-	\n\tSee the man pages. (man ssh-email-connect)"
+	USAGE="Usage:\n\t\e[1m${0##*/}\e[0m [\e[1m-p \e[0;4mPORT\e[0m] \
+		[\e[1m-u \e[0;4msshUSER\e[0m] [\e[1m-s \e[0;4mSUBJECT\e[0m] \
+		[\e[1m-r \e[0;4mremHOST\e[0m]\
+		\n\tDefault parameters:  sshUSER='$sshUSER', PORT=22.\
+		\n\tVersion \e[1mv$VERSION\e[0m \
+		\n\tSee the man pagess:  \e[1mman ssh-email-connector\e[0m"
 	while getopts  ":p:u:s:r:h" flag
 	do
     	case "$flag" in

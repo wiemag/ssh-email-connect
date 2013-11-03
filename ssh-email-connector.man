@@ -8,7 +8,8 @@
 A wrapper around the ssh command that uses thunderbird inboxes to find the current IP address of a remote host. It uses information e-mailed from the remote host by boot-notify.service.
 
 .SH SYNOPSIS
-ssh-email-connector [-p PORT] [-u sshUSER] [-s SUBJECT] [-r remHOST] 
+\fBssh-email-connector\fR 
+[\fB-p \fIPORT\fR] [\fB-u \fIsshUSER\fR] [\fB-s \fISUBJECT\fR] [\fB-r \fIremHOST\fR] 
 
 .SH "DESCRIPTION"
 The ssh-email-connector script browses thunderbird inboxes searching for information from a remote host to find out the remote host's IP. The e-mail message from the remote hosts must have the host's IP as the first word. The boot-notify package provides a systemd service and scripts to send such e-mail messages. If ssh-email-connector finds such a message, the script ssh-connects the local user to the remote host.
@@ -18,24 +19,22 @@ For safety reasons, the e-mail message from the remote host informs only about t
 
 
 .SH OPTIONS
-
-.B -u sshUSER
-.br
+.TP
+.B -u \fIsshUSER\fR
 sshUSER is the user name/login that the local user will log in as, using the ssh network protocol. The default value of sshUSER is "$USER" (the current user on the local host).
-
-.B -p PORT
-.br
+.TP
+.B -p \fIPORT\fR
 The ssh connection port. It defaults to 22 if not set otherwise.
-
-.B -s SUBJECT
+.TP
+.B -s \fISUBJECT\fR
 SUBJECT is the subject of the e-mail message ssh-email-connector looks for in thunderbird's inboxes.
-.br
-If not invoked explicitly, SUBJECT is assigned a default value of 'time msg from'. Not enough to differentiate e-mails from different hosts.
-
-.B -r remHOST
-.br
+.PP
+.RS
+If not invoked explicitly, SUBJECT defaults to '\fBtime msg from\fR'. Not enough to differentiate e-mails from different hosts, but the script will look for the latest e-mail message, and unless that is a shutdown message, the script will try to ssh into the remote host, using the other parameters whether invoked explicitly or defaulted.
+.RE
+.TP
+.B -r \fIremHOST\fR
 The remote host's name. If this option is used, " $remHOST" is appended to the $SUBJECT, and the script looks for e-mail subjects containing the value of "$SUBJECT $remHOST" (a space between $SUBJECT and $remHOST).
-
 
 .SH AUTHOR's NOTES AND USAGE EXAMPLES
 .br
@@ -56,14 +55,14 @@ The remote host's name. If this option is used, " $remHOST" is appended to the $
 
 .br
 (6) The script could be made to work with profiles that held all the information necessary to connect to the remote hosts. In author's opinion that would be an overkill. Instead, the author suggests using aliases in .bashrc, e.g.
-
-.br
+.PP
+.RE
 	conn2neighbour='ssh-email-connector -p 56991 -u xyz -r neighbour'
 .br
 	conn2mum='ssh-email-connector -u me -r mum'
 .br
 	conn2m='ssh-email-connector -u me -r m$'
-.br
+.RE
 
 .br
 The last example shows how to differentiate between the 'mum' and 'm' host names. Of course, in this example the remote host name must be the last word in the subject.
